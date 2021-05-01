@@ -73,7 +73,7 @@ void Triangulo_print (Triangulo* this) {
     Figure* sup = (Figure*) this;
     printf("Triangulo de tamanho (%d,%d) na posicao (%d,%d). ",
            this->w, this->h, sup->x, sup->y);
-    printf("Com os pontos: ");
+    printf("Nos pontos: ");
     for (int i=0; i<3; i++) {
     	printf("(%d, %d)", this->xpoints[i], this->ypoints[i]);
 	}
@@ -113,8 +113,8 @@ void Hexagono_print (Hexagono* this) {
     Figure* sup = (Figure*) this;
     printf("Hexagono de tamanho (%d,%d) na posicao (%d,%d). ",
            this->w, this->h, sup->x, sup->y);
-    printf("Com os pontos: ");
-    for (int i=0; i<3; i++) {
+    printf("Nos pontos: ");
+    for (int i=0; i<6; i++) {
     	printf("(%d, %d)", this->xpoints[i], this->ypoints[i]);
 	}
 	printf("\n");
