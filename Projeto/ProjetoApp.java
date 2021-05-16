@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import figures.*;
-
+import ivisible.*;
 public class ProjetoApp {
     public static void main(String[] args) {
         List_frame frame = new List_frame();
@@ -18,6 +18,7 @@ class List_frame extends JFrame {
     boolean mudafundo=false;
     boolean mudacontorno=false;
     Point pos;
+    ArrayList<Button> buts = new ArrayList<Button>();
     ArrayList<Figure> figs = new ArrayList<Figure>();
     Figure focus = null;
     float aux = 1;
@@ -26,21 +27,30 @@ class List_frame extends JFrame {
         Color.GREEN, Color.GRAY, Color.MAGENTA, Color.ORANGE,
         Color.CYAN
     };
+            
+    Button focus_button = null;
+    
     Random rand = new Random();
 
     List_frame() {
-        this.addWindowListener (
-            new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                    System.exit(0);
-                }
+        buts.add(new Button(1,new Rect(30,50,30,30,Color.black,Color.black)));
+        buts.add(new Button(1,new Elipse(30,90,30,30,Color.black,Color.black)));
+	buts.add(new Button(2,new Triangulo(30,130,30,30,Color.black,Color.black)));
+	buts.add(new Button(3,new Hexagono(30,170,30,30,Color.black,Color.black)));
+	
+		//janela
+        this.addWindowListener (new WindowAdapter() {
+            public void windowClosing (WindowEvent e) {
+                System.exit(0);
             }
-        );
+        });
 
         this.addMouseListener ( //Listener para o foco
             new MouseAdapter() {
                 public void mousePressed (MouseEvent evt) {
                     pos = getMousePosition();
+                    int x = evt.getX();
+                    int y = evt.getY();
                     if (focus != null) {
                         focus.espessura = aux;
                     }
@@ -48,6 +58,9 @@ class List_frame extends JFrame {
                     focus = null;
 
                     for (Figure fig: figs) {
+                    	 if (fig.clicked(x,y)) {
+                            System.out.println("CLICKED!"); //teste do clicked
+                        }
                         if (fig.contains(evt)) {
                             focus = fig;
                             aux = focus.espessura;
@@ -72,6 +85,7 @@ class List_frame extends JFrame {
                         if (pos != null)
                             focus.drag(evt.getX() - pos.x, evt.getY() - pos.y, evt.getPoint());
                         pos = getMousePosition();
+                        
                         repaint();
                     }
                 }
@@ -119,12 +133,12 @@ class List_frame extends JFrame {
                             focus.w -= 1;
                             focus.resize();
                         }
-                    } else if (evt.getKeyCode() == 40 & focus != null) {//diminui a altura da figura selecionada 'seta baixo'
+                    } else if (evt.getKeyCode() == 38 & focus != null) {//diminui a altura da figura selecionada 'seta cima'
                         if (focus.h > 5) {
                             focus.h -= 1;
                             focus.resize();
                         }
-                    } else if (evt.getKeyCode() == 38 & focus != null) {//aumenta a altura da figura selecionada 'seta cima'
+                    } else if (evt.getKeyCode() == 40 & focus != null) {//aumenta a altura da figura selecionada 'seta baixo'
                         if (focus.h < 400) {
                             focus.h  += 1;
                             focus.resize();
@@ -207,10 +221,18 @@ class List_frame extends JFrame {
     public void paint(Graphics g) {
 	Graphics2D graficos = (Graphics2D) g;
         super.paint(g);
-
+        
+        for (Button but: this.buts) {
+            but.paint(g);
+        }
+        
         for (Figure fig: this.figs) {
             fig.paint(g);
         }
+        
+       
+
+        
 	if (HUD == true){
             graficos.setColor(Color.black);
             graficos.setFont(new Font("Fonte", 3 , 13));
