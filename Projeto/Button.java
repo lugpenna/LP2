@@ -2,44 +2,45 @@ import java.awt.*;
 
 import ivisible.IVisible;
 import figures.Figure;
+import java.awt.event.*;
 
-public class Button implements IVisible{ 
-	private Figure fig;
-	public Color fundo = Color.lightGray; 
-	public int idx;
-	
-	public Button(int idx, Figure fig){ //Construtor do Botão
-		this.idx = idx;
-		this.fig = fig;
-	}
-	
-	public boolean clicked(int x, int y){
-        
-		return false;
-	}
-	
-	public void paint(Graphics g){
-		Graphics2D g2d = (Graphics2D) g;
-		
+public class Button implements IVisible {
+    public int x, y;
+    public int idx;
+    public Figure figs;
+    public boolean focused;
 
-		g2d.setColor(Color.black);
-        	g2d.drawRect(0,40,45,45);
-		g2d.setColor(fundo);
-		g2d.fillRect(1,41,44,44);
-		g2d.setColor(Color.black);
-		g2d.drawRect(0,80,45,45);
-		g2d.setColor(fundo);
-		g2d.fillRect(1,81,44,44);
-		g2d.setColor(Color.black);
-		g2d.drawRect(0,120,45,45);
-		g2d.setColor(fundo);
-		g2d.fillRect(1,121,44,44);
-		g2d.setColor(Color.black);
-		g2d.drawRect(0,160,45,45);
-		g2d.setColor(fundo);
-		g2d.fillRect(1,161,44,44);
-		
-		this.fig.paint(g);
+    public Button(int idx, Figure figs) {
+        this.idx = idx;
+        this.figs = figs;
+        this.focused = false;
 
-	}
+        this.x = 0;
+        this.y = 35 + idx * 40;
+    }
+
+    public boolean clicked(MouseEvent evt) {
+        if (evt.getX() >= this.x && evt.getX() <= this.x + 30 && evt.getY() >= this.y && evt.getY() <= this.y + 30)
+            return true;
+
+        return false;
+    }
+
+    public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setStroke(new BasicStroke(1));
+
+        if (this.focused)
+            g2d.setPaint(Color.DARK_GRAY);
+        else
+            g2d.setPaint(Color.GRAY);
+
+        g2d.fillRect(this.x, this.y, 40, 40);
+
+        g2d.setPaint(Color.BLACK);
+        g2d.drawRect(this.x, this.y, 40, 40);
+
+        this.figs.paint(g);
+    }
 }
