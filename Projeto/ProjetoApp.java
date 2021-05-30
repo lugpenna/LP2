@@ -47,6 +47,7 @@ class List_frame extends JFrame {
 	
 	this.setFocusTraversalKeysEnabled(false);
 	
+	//bin
 	try {
             FileInputStream f = new FileInputStream("proj.bin");
             ObjectInputStream o = new ObjectInputStream(f);
@@ -86,7 +87,7 @@ class List_frame extends JFrame {
                     focus = null;
 
                     for (Figure fig: figs) {
-                    	 if (fig.clicked(x,y)) {
+                    	 if (fig.clicked(evt)) {
                             System.out.println("CLICKED!"); //teste do clicked
                         }
                         if (fig.contains(evt)) {
