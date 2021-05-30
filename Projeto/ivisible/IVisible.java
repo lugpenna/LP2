@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.awt.Graphics;
 
 public interface IVisible {
-    void paint(Graphics g);
-    boolean clicked(MouseEvent evt);
+    public void paint(Graphics g);
+    public boolean clicked(MouseEvent evt);
 
 }
