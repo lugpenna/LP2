@@ -7,14 +7,12 @@ import java.awt.event.*;
 public class Hexagono extends Figure {
     private int x1,x2,x3,x4,x5,x6,y1,y2,y3,y4,y5,y6;
     private int x_vetor[], y_vetor[];
-    Polygon polygon;
+     private Polygon polygon;
 
     public Hexagono(int x, int y, int w, int h, Color contorno, Color fundo) {//Construtor
+        super (x,y,w,h,contorno,fundo);
+        
         this.tipo = "Hexagono";
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
 	
 	//propriedades hexagono
         this.x1 = x;
@@ -39,9 +37,6 @@ public class Hexagono extends Figure {
         int y_vet[] = {this.y1, this.y2, this.y3, this.y4, this.y5, this.y6};
         this.x_vetor = x_vet;
         this.y_vetor = y_vet;
-
-        this.contorno = contorno;
-        this.fundo = fundo;
 
         this.espessura = 1.0f;
         this.polygon = new Polygon(this.x_vetor, this.y_vetor, 6);
@@ -101,4 +96,10 @@ public class Hexagono extends Figure {
 
         this.polygon = new Polygon(this.x_vetor, this.y_vetor, 6);
     }
+    
+	public boolean clicked(MouseEvent evt) {
+			if (this.polygon.contains(evt.getPoint()))
+				return true;
+			return false;
+	}
 }
