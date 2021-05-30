@@ -7,14 +7,12 @@ public class Triangulo extends Figure {
     private int x_vetor[], y_vetor[];
     private int x1, x2, x3;
     private int y1, y2, y3;
-    Polygon polygon;
+    private Polygon polygon;
 
     public Triangulo (int x, int y, int w, int h, Color contorno, Color fundo) {//Construtor
+        super (x,y,w,h,contorno,fundo);
+        
         this.tipo = "Triangulo";
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
 
 	//propriedades triangulo
         this.x1 = x;
@@ -30,9 +28,6 @@ public class Triangulo extends Figure {
         int y_vet[] = {this.y1, this.y2, this.y3};
         this.x_vetor = x_vet;
         this.y_vetor = y_vet;
-
-        this.contorno = contorno;
-        this.fundo = fundo;
 
         this.espessura = 1.0f;
         this.polygon = new Polygon(this.x_vetor, this.y_vetor, 3);
@@ -83,4 +78,11 @@ public class Triangulo extends Figure {
 
         this.polygon = new Polygon(this.x_vetor, this.y_vetor, 3);
     }
+    
+	public boolean clicked(MouseEvent evt) {
+			if (this.polygon.contains(evt.getPoint()))
+				return true;
+			return false;
+	}
+    
 }
