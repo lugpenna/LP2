@@ -4,18 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Rect extends Figure {
-    Rectangle polygon;
+    private Rectangle polygon;
 
     public Rect (int x, int y, int w, int h, Color contorno, Color fundo) {//Construtor
-        this.tipo = "Retangulo";
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.contorno = contorno;
-        this.fundo = fundo;
+        super (x,y,w,h,contorno,fundo);
         this.espessura = 1.0f;
         this.polygon = new Rectangle(this.x, this.y, this.w, this.h);
+        this.tipo = "Retangulo";
     }
 
     public void paint(Graphics g) {
@@ -30,7 +25,7 @@ public class Rect extends Figure {
         g2d.fillRect(this.x, this.y, this.w, this.h);   
        
     }
-
+    
     public void drag (int x, int y, Point mouse_pos) {
         this.x += x;
         this.y += y;
@@ -46,4 +41,11 @@ public class Rect extends Figure {
     public void resize () {
         this.polygon = new Rectangle(this.x, this.y, this.w, this.h);
     }
+        
+	public boolean clicked(MouseEvent evt) {
+			if (this.polygon.contains(evt.getPoint()))
+				return true;
+			return false;
+	}
+       
 }
