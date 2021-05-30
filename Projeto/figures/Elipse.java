@@ -5,16 +5,12 @@ import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 
 public class Elipse extends Figure {
-    Ellipse2D polygon;
+    private Ellipse2D polygon;
 
     public Elipse (int x, int y, int w, int h, Color contorno, Color fundo) {//Construtor
+	super (x,y,w,h,contorno,fundo);
+
         this.tipo = "Elipse";
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.contorno = contorno;
-        this.fundo = fundo;
 
         this.espessura = 1.0f;
         this.polygon = new Ellipse2D.Double(this.x, this.y, this.w, this.h);
@@ -46,4 +42,10 @@ public class Elipse extends Figure {
     public void resize () {
         this.polygon = new Ellipse2D.Double(this.x, this.y, this.w, this.h);
     }
+    
+	public boolean clicked(MouseEvent evt) {
+			if (this.polygon.contains(evt.getPoint()))
+				return true;
+			return false;
+	}
 }
